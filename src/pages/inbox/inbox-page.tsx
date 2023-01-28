@@ -30,6 +30,15 @@ export default function InboxPage() {
 
             p.on("connection",conn => {
                 setConnection(conn);
+
+                p!.on('call', call => {
+                    navigator.mediaDevices.getUserMedia({video: true,audio: true}).then(stream => {
+                        call.answer(stream);
+                        call.on('stream', remoteStream => {
+                            console.log("getting stream");
+                        });
+                    }).catch(e => console.log(e));
+                });
             });
         }
     });

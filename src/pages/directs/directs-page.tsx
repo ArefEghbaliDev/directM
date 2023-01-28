@@ -3,8 +3,9 @@ import { createSignal, For } from "solid-js";
 import { usePeer } from "../../lib/context/peer-context";
 import { IMessage } from "../../models/message.interface";
 import { Icon } from '@amoutonbrady/solid-heroicons';
-import { phone, videoCamera, paperAirplane, arrowLeft } from '@amoutonbrady/solid-heroicons/outline';
+import { phone, paperAirplane, arrowLeft } from '@amoutonbrady/solid-heroicons/outline';
 import SingleMessage from "./components/single-message";
+import VideoCall from "./components/video-call";
 
 export default function DirectsPage() {
     const [message, setMessage] = createSignal<string>("");
@@ -46,7 +47,7 @@ export default function DirectsPage() {
                 </div>
                 <div class="flex items-center justify-end">
                     <button type="button" class="ml-4"><Icon path={phone} width={24} height={24} /></button>
-                    <button type="button" class="ml-4"><Icon path={videoCamera} width={24} height={24} /></button>
+                    <VideoCall remotePeerId={peer()!.id} />
                 </div>
             </div>
             <div class="flex-1 flex flex-col align-stretch justify-between p-5 relative overflow-y-auto pb-20">

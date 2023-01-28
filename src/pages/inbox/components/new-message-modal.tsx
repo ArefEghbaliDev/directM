@@ -18,8 +18,6 @@ export default function NewMessageModal({ peer }: IProps) {
 
     const handleConnect = () => {
 
-    console.log("new message",connection());
-
         if (connection()) {
             navigate(`/directs/${userId()}`);
         }
@@ -30,8 +28,6 @@ export default function NewMessageModal({ peer }: IProps) {
             const conn = p.connect(userId());
 
             setConnection(conn);
-
-            console.log("connection new", conn);
 
             conn.on("open", () => {
                 navigate(`/directs/${userId()}`);
