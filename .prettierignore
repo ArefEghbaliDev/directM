@@ -1,0 +1,16 @@
+.swc
+.next
+.vs
+/node_modules
+/public
+.dockerignore
+dockerfile
+.env
+chrome.json
+docker-compose-prod.yml
+docker-compose.yaml
+jest.config.js
+package.json
+tsconfig.json
+yarn.lock
+invoice.json

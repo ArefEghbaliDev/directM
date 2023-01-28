@@ -1,19 +1,19 @@
 import Peer from "peerjs";
-import { For, onMount, Show } from "solid-js";
-import { useNavigate, A } from '@solidjs/router';
+import { For,onMount,Show } from "solid-js";
+import { useNavigate,A } from '@solidjs/router';
 import { usePeer } from "../../lib/context/peer-context";
-import { openDB } from "idb";
-import { IMessage } from "../../models/message.interface";
 import NewMessageModal from "./components/new-message-modal";
+import {Icon} from '@amoutonbrady/solid-heroicons';
+import {chevronRight} from '@amoutonbrady/solid-heroicons/outline';
 
 export default function InboxPage() {
-    const { peer, setPeer, setConnection,setMessages,messages } = usePeer();
+    const { peer,setPeer,setConnection,contacts} = usePeer();
 
     const navigate = useNavigate();
 
     onMount(async () => {
         if (!localStorage.getItem("id")) {
-            navigate("/register", { replace: false });
+            navigate("/register",{ replace: false });
         }
         else {
             let p: Peer | null = null;
@@ -25,21 +25,11 @@ export default function InboxPage() {
             }
 
             if (!p) return;
+
             setPeer(p);
 
-            const db = await openDB("inbox", 1, {
-                upgrade(db) {
-                    db.createObjectStore('messages')
-                }
-            });
-
-            p.on("connection", conn => {
+            p.on("connection",conn => {
                 setConnection(conn);
-                conn.on("data", async data => {
-                    const message: IMessage = JSON.parse(data as string);
-                    await db.put('messages', [message], conn.peer);
-                    setMessages(prev => ([...prev, message]));
-                });
             });
         }
     });
@@ -56,15 +46,15 @@ export default function InboxPage() {
                 />
             </div>
             <div class="p-5 flex-1">
-                <Show when={messages.length > 0}>
-                    <For each={messages}>
-                        {(message) => <A href={`/directs/${message.senderId}`}>
-                            <p class="font-medium mb-2">{message.senderId}</p>
-                            {messages[messages.length - 1].sendDate}
+                <Show when={contacts.length > 0}>
+                    <For each={contacts}>
+                        {(contact) => <A href={`/directs/${contact}`} class="flex items-center justify-between mb-5 font-medium">
+                            {contact}
+                            <Icon path={chevronRight} width={18} height={18} />
                         </A>}
                     </For>
                 </Show>
-                <Show when={messages.length === 0}>
+                <Show when={contacts.length === 0}>
                     <h4 class="font-medium opacity-60 text-xl text-center">No Messages</h4>
                 </Show>
             </div>

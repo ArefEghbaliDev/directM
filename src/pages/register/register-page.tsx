@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import {Icon} from '@amoutonbrady/solid-heroicons';
 import {paperAirplane} from '@amoutonbrady/solid-heroicons/outline';
@@ -7,6 +7,12 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   const [peerId, setPeerId] = createSignal<string>("");
+
+  onMount(() => {
+    if(localStorage.getItem("id")) {
+      navigate("/inbox", {replace: true} );
+    }
+  });
 
   const handleContinue = () => {
     if(peerId() === "") return;

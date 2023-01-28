@@ -20,6 +20,8 @@
   "dependencies": {
     "@amoutonbrady/solid-heroicons": "^0.8.0",
     "@solidjs/router": "^0.7.0",
+    "clsx": "^1.2.1",
+    "dayjs": "^1.11.7",
     "idb": "^7.1.1",
     "peerjs": "^1.4.7",
     "solid-js": "^1.6.6"
